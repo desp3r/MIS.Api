@@ -24,5 +24,11 @@
 
 
         }
+        public static class Employee
+        {
+            public const string CRUD = Base + "/employee";
+
+            public const string List = Base + "/employee/list";
+        }
     }
 }
