@@ -1,11 +1,14 @@
 ﻿using MIS.Business.Models.User;
+using MIS.Data.Models;
 
 namespace MIS.Business.Interfaces
 {
-    public interface IIdentityService
+    public interface IUserService
     {
-        public Task<RegisterUserResponse> RegisterUserAsync(RegisterUserRequest request);
+        public void GetInfo(int Id);
 
-        public Task<LoginUserResponse> LoginUserAsync(LoginUserRequest request);
+        public void CreateAppointment(Appointment appointment);
+
+        public void GetAppointment();
     }
 }

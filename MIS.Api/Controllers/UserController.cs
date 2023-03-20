@@ -1,14 +1,50 @@
-﻿using MIS.Api.Controllers.Base;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MIS.Api.Controllers.Base;
+using MIS.Business.Interfaces;
+using MIS.Business.Models.User;
+using MIS.Data.Models;
 
-namespace MIS.Api.Controllers
+namespace Mis.Api.Controllers
 {
-    public class EmployeeController : BaseApiController
+    public class UserController : BaseApiController
     {
-        private readonly ILogger<EmployeeController> _logger;
+        private readonly ILogger<UserController> _logger;
+        private readonly IUserService userService;
 
-        public EmployeeController(ILogger<EmployeeController> logger)
+        public UserController(
+            ILogger<UserController> logger,
+            IUserService userService)
         {
             _logger = logger;
+            userService = userService;
         }
+
+        [AllowAnonymous]
+        [HttpGet(ApiRoutes.User.GetInfo + "{Id}")]
+        public HttpResponseMessage GetInfo(int Id)
+        {
+            userService.GetInfo(Id);
+            return null; //temporary
+        }
+
+        [AllowAnonymous]
+        [HttpGet(ApiRoutes.User.Appointment)]
+        public HttpResponseMessage CreateAppointment(Appointment appointment)
+        {
+            userService.CreateAppointment(appointment);
+            return null; //temporary
+        }
+
+        [AllowAnonymous]
+        [HttpGet(ApiRoutes.User.Appointment)]
+        public HttpResponseMessage GetAppointment()
+        {
+            userService.GetAppointment();
+            return null; //temporary
+        }
+
     }
 }
+

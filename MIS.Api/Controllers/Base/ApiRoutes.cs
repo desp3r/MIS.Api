@@ -15,5 +15,14 @@
             public const string Login = Base + "/identity/user/login";
 
         }
+
+        public static class User
+        {
+            public const string GetInfo = Base + "/user/info";
+
+            public const string Appointment = Base + "user/appointment";
+
+
+        }
     }
 }
