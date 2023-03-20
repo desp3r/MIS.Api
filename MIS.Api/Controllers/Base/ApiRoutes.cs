@@ -18,9 +18,9 @@
 
         public static class User
         {
-            public const string GetInfo = Base + "/user/info";
+            public const string CRUD = Base + "/user";
 
-            public const string Appointment = Base + "user/appointment";
+            public const string List = Base + "user/list";
 
 
         }
