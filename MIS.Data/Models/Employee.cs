@@ -12,6 +12,8 @@ namespace MIS.Data.Models
         public Guid UserId { get; set; }
         public Guid OrganizationId { get; set; }
 
+        public Guid SpecialtyId { get; set; }
+
         [MaxLength(50)]
         public string FirstName { get; set; } = string.Empty!;
         [MaxLength(50)]

@@ -2,6 +2,5 @@
 {
     public interface EmployeeService
     {
-        public Task Create(Emplo)
     }
 }
