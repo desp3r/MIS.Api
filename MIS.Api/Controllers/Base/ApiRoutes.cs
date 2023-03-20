@@ -16,6 +16,14 @@
 
         }
 
+        public static class User
+        {
+            public const string GetInfo = Base + "/user/info";
+
+            public const string Appointment = Base + "user/appointment";
+
+
+        }
         public static class Employee
         {
             public const string CRUD = Base + "/employee";
