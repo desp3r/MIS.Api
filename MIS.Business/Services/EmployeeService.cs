@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LinqKit;
 using Microsoft.Extensions.Logging;
 using MIS.Business.Interfaces;
 using MIS.Business.Models.Employee;
@@ -20,7 +21,7 @@ namespace MIS.Business.Services
             _repository = repository;
         }
 
-        public async Task<Employee> Create(EmloyeeModel model)
+        public async Task<Employee> CreateAsync(EmloyeeModel model)
         {
             var employee = _mapper.Map<Employee>(model);
 
@@ -30,7 +31,7 @@ namespace MIS.Business.Services
             return employee;
         }
 
-        public async Task<Employee> Update(EmloyeeModel model)
+        public async Task<Employee> UpdateAsync(EmloyeeModel model)
         {
             var employee = await _repository.SingleAsync<Employee>(x => x.Id == model.Id);
 
@@ -44,7 +45,7 @@ namespace MIS.Business.Services
             return employee;
         }
 
-        public async Task<bool> Delete(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync<Employee>(id);
             await _repository.SaveChangesAsync();
@@ -52,15 +53,45 @@ namespace MIS.Business.Services
             return true;
         }
 
-        public async Task<Employee> Get(Guid id)
+        public async Task<Employee> GetAsync(Guid id)
         {
             var employee = await _repository.SingleAsync<Employee>(x => x.Id == id);
             return employee;
         }
 
-        public async Task<IEnumerable<Employee>> List(ListEmployeesRequest request)
+        public async Task<IEnumerable<Employee>> ListAsync(ListEmployeesRequest request)
         {
-            throw new NotImplementedException();
+            var predicate = BuildEmployeePredicate(request);
+            var employees = await _repository.GetAllAsync<Employee>(predicate);
+
+            return employees;
+        }
+
+        private ExpressionStarter<Employee> BuildEmployeePredicate(ListEmployeesRequest request)
+        {
+            var predicate = PredicateBuilder.New<Employee>();
+
+            if (request.FirstName != string.Empty)
+            {
+                predicate = predicate.And(emp => emp.FirstName.StartsWith(request.FirstName));
+            }
+
+            if (request.MiddleName != string.Empty)
+            {
+                predicate = predicate.And(emp => emp.MiddleName.StartsWith(request.MiddleName));
+            }
+
+            if (request.LastName != string.Empty)
+            {
+                predicate = predicate.And(emp => emp.LastName.StartsWith(request.LastName));
+            }
+
+            if (request.SpecialtyId != Guid.Empty)
+            {
+                predicate = predicate.And(emp => emp.SpecialtyId == request.SpecialtyId);
+            }
+
+            return predicate;
         }
     }
 }
