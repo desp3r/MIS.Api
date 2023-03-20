@@ -24,8 +24,16 @@ namespace Mis.Api.Controllers
         [HttpPost(ApiRoutes.Identity.Register)]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserRequest request)
         {
-            var result = await _identityService.RegisterUserAsync(request);
-            return Ok(result);
+            try
+            {
+                var result = await _identityService.RegisterUserAsync(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw ex;
+            }
         }
 
         [AllowAnonymous]
