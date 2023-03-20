@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MIS.Business.Models;
+using MIS.Business.Models.Employee;
 using MIS.Business.Models.User;
 using MIS.Data.Models;
 

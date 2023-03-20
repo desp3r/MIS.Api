@@ -1,7 +1,7 @@
 ﻿using MIS.Business.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace MIS.Business.Models
+namespace MIS.Business.Models.Employee
 {
     public class EmloyeeModel
     {
