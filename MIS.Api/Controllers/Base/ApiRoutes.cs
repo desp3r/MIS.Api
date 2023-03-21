@@ -15,5 +15,20 @@
             public const string Login = Base + "/identity/user/login";
 
         }
+
+        public static class User
+        {
+            public const string CRUD = Base + "/user";
+
+            public const string List = Base + "user/list";
+
+
+        }
+        public static class Employee
+        {
+            public const string CRUD = Base + "/employee";
+
+            public const string List = Base + "/employee/list";
+        }
     }
 }

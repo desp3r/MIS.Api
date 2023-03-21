@@ -18,6 +18,8 @@ namespace MIS.Business.Extensions
         public static IServiceCollection AddMisBusinessServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+
             return services;
         }
     }
