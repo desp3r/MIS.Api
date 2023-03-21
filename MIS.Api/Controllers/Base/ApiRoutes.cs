@@ -30,5 +30,12 @@
 
             public const string List = Base + "/employee/list";
         }
+
+        public static class Appointment
+        {
+            public const string CRUD = Base + "/appointment";
+
+            public const string List = Base + "/appointment/list";
+        }
     }
 }
