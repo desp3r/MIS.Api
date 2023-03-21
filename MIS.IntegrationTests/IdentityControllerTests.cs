@@ -8,6 +8,8 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using MIS.Api.Controllers.Base;
 using MIS.Business.Models.User;
+using MIS.Data.Interfaces;
+using MIS.Data.Models;
 using MIS.IntegrationTests.Base;
 
 namespace MIS.IntegrationTests
@@ -30,10 +32,11 @@ namespace MIS.IntegrationTests
             var responce = await TestClient.PostAsJsonAsync(route, request);
 
             //Assert
-            //responce.StatusCode.Should().Be(HttpStatusCode.OK);
+            responce.StatusCode.Should().Be(HttpStatusCode.OK);
             var registerUserResponce = await responce.Content.ReadAsAsync<RegisterUserResponse>();
             registerUserResponce.Email.Should().Be(request.Email);
             registerUserResponce.Message.Should().Be("Сongratulations you have successfully registered in the system");
+            
         }
     }
 }

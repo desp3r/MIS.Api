@@ -12,6 +12,8 @@ using MIS.Api.Controllers.Base;
 using MIS.Business.Models.User;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using MIS.Data.Interfaces;
+using MIS.Data.Repositories;
 
 namespace MIS.IntegrationTests.Base
 {
