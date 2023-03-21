@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using MIS.Data.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
@@ -19,9 +13,10 @@ namespace MIS.IntegrationTests
 
         public TestRunStart(IMessageSink messageSink) : base(messageSink)
         {
-            var options = new DbContextOptionsBuilder<MisContext>()
+            DbContextOptionsBuilder<MisContext> options = new DbContextOptionsBuilder<MisContext>()
                                 .UseSqlServer(DB_CONNECTION);
-            var dbContext = new MisContext(options.Options);
+            MisContext dbContext = new MisContext(options.Options);
+
             dbContext.Database.Migrate();
         }
     }

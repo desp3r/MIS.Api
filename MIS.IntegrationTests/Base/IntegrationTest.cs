@@ -1,31 +1,29 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using MIS.Data;
-using System.Net.Http;
-using MIS.Data.Contexts;
-using System.Net.Http.Json;
 using MIS.Api.Controllers.Base;
 using MIS.Business.Models.User;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Configuration;
+using MIS.Data.Contexts;
 using MIS.Data.Interfaces;
+using MIS.Data.Models;
 using MIS.Data.Repositories;
-using Microsoft.AspNetCore.TestHost;
+using System.Net.Http.Json;
 
 namespace MIS.IntegrationTests.Base
 {
     public class IntegrationTest
     {
-        protected readonly HttpClient TestClient;
+        protected readonly HttpClient TestClient; //TestClient may be used to test authenticated user logic. Unused without JWT
+        protected readonly IMisRepository TestRepository;
         protected const string DB_CONNECTION = "Server=localhost,14331;Database=Master;User Id=sa;Password=P@ssword123";
 
         protected IntegrationTest()
         {
-            var app = GetWebApplication();
+            WebApplicationFactory<Program> app = GetWebApplication();
+            TestRepository = app.Services.GetRequiredService<MisRepository>();
             TestClient = app.CreateClient();
         }
 
@@ -37,7 +35,7 @@ namespace MIS.IntegrationTests.Base
 
         private async Task<string> GetJwtAsync() //unused without JWT
         {
-            var responce = await TestClient.PostAsJsonAsync(ApiRoutes.Identity.Register,
+            HttpResponseMessage responce = await TestClient.PostAsJsonAsync(ApiRoutes.Identity.Register,
                 new RegisterUserRequest
                 {
                     Email = "integration@test.net",
@@ -45,7 +43,7 @@ namespace MIS.IntegrationTests.Base
                     Password = "password"
                 });
 
-            var registrationResponse = await responce.Content.ReadAsAsync<RegisterUserResponse>();
+            RegisterUserResponse registrationResponse = await responce.Content.ReadAsAsync<RegisterUserResponse>();
             //return registrationResponse.Token;
             throw new NotImplementedException();
         }
@@ -56,13 +54,14 @@ namespace MIS.IntegrationTests.Base
             {
                 builder.ConfigureTestServices(services =>
                 {
-                    var options = new DbContextOptionsBuilder<MisContext>()
+                    DbContextOptions<MisContext> options = new DbContextOptionsBuilder<MisContext>()
                                     .UseSqlServer(DB_CONNECTION)
                                     .Options;
 
                     services.RemoveAll(typeof(MisContext));
                     services.AddSingleton(options);
                     services.AddSingleton<MisContext>();
+                    services.AddSingleton<MisRepository>();
                 });
 
                 builder.ConfigureAppConfiguration((ctx, config) =>
@@ -73,5 +72,16 @@ namespace MIS.IntegrationTests.Base
                     });
                 });
             });
+
+        protected async Task ClearTableAsync<T>() where T : class, IEntity
+        {
+            var users = await TestRepository.GetAllAsync<T>();
+            foreach (var user in users)
+            {
+                await TestRepository.DeleteAsync<T>(user.Id);
+            }
+
+            await TestRepository.SaveChangesAsync();
+        }
     }
 }
