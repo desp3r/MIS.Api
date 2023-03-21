@@ -14,29 +14,19 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using MIS.Data.Interfaces;
 using MIS.Data.Repositories;
+using Microsoft.AspNetCore.TestHost;
 
 namespace MIS.IntegrationTests.Base
 {
     public class IntegrationTest
     {
         protected readonly HttpClient TestClient;
+        protected const string DB_CONNECTION = "Server=localhost,14331;Database=Master;User Id=sa;Password=P@ssword123";
 
         protected IntegrationTest()
         {
-            var appFactory = new WebApplicationFactory<Program>()
-                .WithWebHostBuilder(builder =>
-                {
-                    builder.ConfigureServices(services =>
-                    {
-                        services.RemoveAll(typeof(MisContext));
-                        services.AddDbContext<MisContext>(options =>
-                        {
-                            options.UseInMemoryDatabase("TestMisDatabase");
-                        });
-                    });
-                });
-
-            TestClient = appFactory.CreateClient();
+            var app = GetWebApplication();
+            TestClient = app.CreateClient();
         }
 
         protected async Task AuthenticateAsync() //unused without JWT
@@ -59,5 +49,29 @@ namespace MIS.IntegrationTests.Base
             //return registrationResponse.Token;
             throw new NotImplementedException();
         }
+
+        protected WebApplicationFactory<Program> GetWebApplication()
+            => new WebApplicationFactory<Program>()
+            .WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var options = new DbContextOptionsBuilder<MisContext>()
+                                    .UseSqlServer(DB_CONNECTION)
+                                    .Options;
+
+                    services.RemoveAll(typeof(MisContext));
+                    services.AddSingleton(options);
+                    services.AddSingleton<MisContext>();
+                });
+
+                builder.ConfigureAppConfiguration((ctx, config) =>
+                {
+                    config.AddInMemoryCollection(new Dictionary<string, string>
+                    {
+                        { "SqlConnectionString", "Server=localhost,14331;Database=Master;User Id=sa;Password=P@ssword123" }
+                    });
+                });
+            });
     }
 }

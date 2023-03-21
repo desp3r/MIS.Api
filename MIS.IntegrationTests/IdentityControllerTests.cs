@@ -6,10 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using MIS.Api.Controllers.Base;
 using MIS.Business.Models.User;
+using MIS.Data.Contexts;
 using MIS.Data.Interfaces;
 using MIS.Data.Models;
+using MIS.Data.Repositories;
 using MIS.IntegrationTests.Base;
 
 namespace MIS.IntegrationTests
@@ -20,6 +27,7 @@ namespace MIS.IntegrationTests
         public async Task RegisterUser_Should_CreateANewUser()
         {
             //Arange
+            var client = GetWebApplication().CreateClient();
             string route = ApiRoutes.Identity.Register;
             var request = new RegisterUserRequest
             {
@@ -29,7 +37,7 @@ namespace MIS.IntegrationTests
             };
 
             //Act
-            var responce = await TestClient.PostAsJsonAsync(route, request);
+            var responce = await client.PostAsJsonAsync(route, request);
 
             //Assert
             responce.StatusCode.Should().Be(HttpStatusCode.OK);
