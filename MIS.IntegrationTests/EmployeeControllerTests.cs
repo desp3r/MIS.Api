@@ -1,21 +1,15 @@
 ﻿using FluentAssertions;
 using MIS.Api.Controllers.Base;
 using MIS.Business.Models.Employee;
+using MIS.Data.Models;
+using MIS.IntegrationTests.Base;
 using MIS.IntegrationTests.Infrastructure;
 using System.Net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MIS.Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using MIS.Business.Extensions;
 using System.Net.Http.Json;
 
 namespace MIS.IntegrationTests
 {
-    public class EmployeeControllerTests : Base.IntegrationTest
+    public class EmployeeControllerTests : IntegrationTest
     {
         [Fact]
         public async Task Create_Should_CreateAnEmployee()
