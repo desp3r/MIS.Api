@@ -118,7 +118,7 @@ namespace MIS.IntegrationTests
             };
 
             //Act
-            var responce = await client.DeleteAsJsonAsync(route, request);
+            var responce = await client.DeleteAsync(route + "/" + employee.Id);
 
             //Assert
             responce.StatusCode.Should().Be(HttpStatusCode.OK);

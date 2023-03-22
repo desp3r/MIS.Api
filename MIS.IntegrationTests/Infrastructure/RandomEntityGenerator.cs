@@ -48,8 +48,8 @@ namespace MIS.IntegrationTests.Infrastructure
         {
             Employee employee = new Employee()
             {
-                UserId = new Guid(rng.NextString(CharacterSets.Alphanumeric, (16, 16))),
-                OrganizationId = new Guid(rng.NextString(CharacterSets.Alphanumeric, (16, 16))),
+                UserId = new Guid(),
+                OrganizationId = new Guid(),
                 FirstName = rng.NextString(CharacterSets.Alphabetical, (2, 8)),
                 MiddleName = rng.NextString(CharacterSets.Alphabetical, (2, 8)),
                 LastName = rng.NextString(CharacterSets.Alphabetical, (2, 8)),
