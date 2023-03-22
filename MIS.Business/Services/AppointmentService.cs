@@ -40,7 +40,6 @@ namespace MIS.Business.Services
         {
             var appointment = await _repository.SingleAsync<Appointment>(x => x.Id == model.Id);
 
-            // map employee model field into existing in db employee instance
             _mapper.Map(model, appointment);
 
             // Save changes in database
