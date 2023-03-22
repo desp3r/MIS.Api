@@ -10,7 +10,7 @@ namespace MIS.IntegrationTests
 {
     public class IdentityControllerTests : IntegrationTest
     {
-        [Fact]
+        [Fact, TestPriority(1)]
         public async Task RegisterUser_Should_CreateANewUser()
         {
             //Arange
@@ -38,7 +38,7 @@ namespace MIS.IntegrationTests
             registerUserResponce.Message.Should().Be("Сongratulations you have successfully registered in the system");
         }
 
-        [Fact]
+        [Fact, TestPriority(2)]
         public async Task RegisterUser_Should_ReturnAlreadyExists()
         {
             //Arange
@@ -70,7 +70,7 @@ namespace MIS.IntegrationTests
             registerUserResponce.Message.Should().Be("This email is already in use. Choose another!");
         }
 
-        [Fact]
+        [Fact, TestPriority(3)]
         public async Task LoginUser_Should_ReturnSuccess()
         {
             //Arange
@@ -100,7 +100,7 @@ namespace MIS.IntegrationTests
             loginUserResponce.Token.Should().Be("success"); //mock token check
         }
 
-        [Fact]
+        [Fact, TestPriority(4)]
         public async Task LoginUser_Should_ReturnErrorWrongLogin()
         {
             //Arange
@@ -131,7 +131,7 @@ namespace MIS.IntegrationTests
             loginUserResponce.Token.Should().Be("error"); //mock token check
         }
 
-        [Fact]
+        [Fact, TestPriority(5)]
         public async Task LoginUser_Should_ReturnErrorWrongPassword()
         {
             //Arange

@@ -21,7 +21,7 @@ namespace MIS.IntegrationTests.Infrastructure
         {
             string rndEmail = rng.NextString(CharacterSets.Alphanumeric, (3, 40)) + "@test.net";
             string rndPhone = '+' + rng.NextString(CharacterSets.Numeric, (11, 14));
-            string rndPassword = rng.NextString(CharacterSets.AplhanumericWithSpecialCharacters, (8, 50));
+            string rndPassword = rng.NextString(CharacterSets.AplhanumericWithSpecialCharacters, (8, 30));
 
             return new User()
             {
