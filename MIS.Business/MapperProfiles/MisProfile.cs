@@ -19,7 +19,7 @@ namespace MIS.Business.MapperProfiles
 
             #region Employee
 
-            CreateMap<EmloyeeModel, Employee>().ReverseMap();
+            CreateMap<EmployeeModel, Employee>().ReverseMap();
 
             #endregion
         }

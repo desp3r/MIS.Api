@@ -21,7 +21,7 @@ namespace MIS.Business.Services
             _repository = repository;
         }
 
-        public async Task<Employee> CreateAsync(EmloyeeModel model)
+        public async Task<Employee> CreateAsync(EmployeeModel model)
         {
             var employee = _mapper.Map<Employee>(model);
 
@@ -31,7 +31,7 @@ namespace MIS.Business.Services
             return employee;
         }
 
-        public async Task<Employee> UpdateAsync(EmloyeeModel model)
+        public async Task<Employee> UpdateAsync(EmployeeModel model)
         {
             var employee = await _repository.SingleAsync<Employee>(x => x.Id == model.Id);
 

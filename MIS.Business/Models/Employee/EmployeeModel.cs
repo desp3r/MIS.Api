@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MIS.Business.Models.Employee
 {
-    public class EmloyeeModel
+    public class EmployeeModel
     {
         public Guid? Id { get; set; }
         public Guid UserId { get; set; }

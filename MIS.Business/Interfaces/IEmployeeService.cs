@@ -5,8 +5,8 @@ namespace MIS.Business.Interfaces
 {
     public interface IEmployeeService
     {
-        public Task<Employee> CreateAsync(EmloyeeModel model);
-        public Task<Employee> UpdateAsync(EmloyeeModel model);
+        public Task<Employee> CreateAsync(EmployeeModel model);
+        public Task<Employee> UpdateAsync(EmployeeModel model);
         public Task<bool> DeleteAsync(Guid id);
         public Task<Employee> GetAsync(Guid id);
         public Task<IEnumerable<Employee>> ListAsync(ListEmployeesRequest request);

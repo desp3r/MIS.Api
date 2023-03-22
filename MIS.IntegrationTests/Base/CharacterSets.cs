@@ -1,6 +1,6 @@
 ﻿namespace MIS.IntegrationTests.Base
 {
-    internal static class CharachterSets
+    internal static class CharacterSets
     {
         public const string Numeric = "0123456789";
 

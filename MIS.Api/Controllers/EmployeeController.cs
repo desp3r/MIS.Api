@@ -21,7 +21,7 @@ namespace MIS.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost(ApiRoutes.Employee.CRUD)]
-        public async Task<IActionResult> Create([FromBody] EmloyeeModel model)
+        public async Task<IActionResult> Create([FromBody] EmployeeModel model)
         {
             var result = await _employeeService.CreateAsync(model);
             return Ok(result);
@@ -29,7 +29,7 @@ namespace MIS.Api.Controllers
 
         [AllowAnonymous]
         [HttpPut(ApiRoutes.Employee.CRUD)]
-        public async Task<IActionResult> Update([FromBody] EmloyeeModel model)
+        public async Task<IActionResult> Update([FromBody] EmployeeModel model)
         {
             var result = await _employeeService.UpdateAsync(model);
             return Ok();
