@@ -37,5 +37,40 @@
 
             public const string List = Base + "/appointment/list";
         }
+
+        public static class Organization
+        {
+            public const string CRUD = Base + "/organization";
+
+            public const string List = Base + "/organization/list";
+        }
+
+        public static class Patient
+        {
+            public const string CRUD = Base + "/patient";
+
+            public const string List = Base + "/patient/list";
+        }
+
+        public static class Schedule
+        {
+            public const string CRUD = Base + "/schedule";
+
+            public const string List = Base + "/schedule/list";
+        }
+
+        public static class Speciality
+        {
+            public const string CRUD = Base + "/speciality";
+
+            public const string List = Base + "/speciality/list";
+        }
+
+        public static class Timeslot
+        {
+            public const string CRUD = Base + "/timeslot";
+
+            public const string List = Base + "/timeslot/list";
+        }
     }
 }
