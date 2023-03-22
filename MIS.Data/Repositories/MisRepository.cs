@@ -33,6 +33,8 @@ namespace MIS.Data.Repositories
 
         public Task UpdateAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, IEntity
         {
+            entity.UpdatedAt = DateTime.UtcNow;
+
             return Task.Run(() => ChangeEntryState(entity, EntityState.Modified), cancellationToken);
         }
 
