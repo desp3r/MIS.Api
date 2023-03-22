@@ -37,7 +37,7 @@ namespace MIS.Api.Controllers
 
         [AllowAnonymous]
         [HttpDelete(ApiRoutes.Employee.CRUD)]
-        public async Task<IActionResult> Delete([FromBody] Guid id)
+        public async Task<IActionResult> Delete([FromQuery] Guid id)
         {
             var result = await _employeeService.DeleteAsync(id);
             return Ok(result);

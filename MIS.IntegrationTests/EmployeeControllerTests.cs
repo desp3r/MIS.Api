@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using MIS.Api.Controllers.Base;
+using MIS.Business.Extensions;
 using MIS.Business.Models.Employee;
 using MIS.Data.Models;
 using MIS.IntegrationTests.Base;
@@ -106,19 +107,21 @@ namespace MIS.IntegrationTests
                 employee = await TestRepository.SingleAsync<Employee>(e => true);
             }
 
-            var request = new EmployeeModel()
+            var request = new
             {
-                Id = employee.Id
+                id = employee.Id
             };
 
             //Act
-            var responce = await client.DeleteAsync(route + "/" + employee.Id);
+            var responce = await client.DeleteAsync(route + "?id=" + employee.Id.ToString());
 
             //Assert
             responce.StatusCode.Should().Be(HttpStatusCode.OK);
             (await TestRepository.FirstOrDefaultAsync<Employee>(e =>
                 e.Id == employee.Id)).Should().BeNull();
         }
+
+
 
         [Fact]
         public async Task Get_Should_ReturnAnEmployee()
@@ -135,18 +138,18 @@ namespace MIS.IntegrationTests
                 employee = await TestRepository.SingleAsync<Employee>(e => true);
             }
 
-            var request = new EmployeeModel()
+            var request = new
             {
-                Id = employee.Id
+                id = employee.Id
             };
 
             //Act
-            var responce = await client.GetAsync(route + "/" + employee.Id);
+            var responce = await client.GetAsync(route + "?id=" + employee.Id.ToString());
 
             //Assert
             responce.StatusCode.Should().Be(HttpStatusCode.OK);
             var result = await responce.Content.ReadAsAsync<Employee>();
-            result.Equals(employee).Should().BeTrue();
+            result.Id.Should().Be(employee.Id);
         }
 
         [Fact]

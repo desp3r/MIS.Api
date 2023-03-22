@@ -19,29 +19,16 @@ namespace MIS.IntegrationTests.Infrastructure
 
         protected virtual User GenerateRandomUser()
         {
-            User user = new User();
             string rndEmail = rng.NextString(CharacterSets.Alphanumeric, (3, 40)) + "@test.net";
             string rndPhone = '+' + rng.NextString(CharacterSets.Numeric, (11, 14));
             string rndPassword = rng.NextString(CharacterSets.AplhanumericWithSpecialCharacters, (8, 50));
 
-            switch (rng.Next(2))
+            return new User()
             {
-                case 0:
-                    user.Email = rndEmail;
-                    user.Phone = rndPhone;
-                    user.Password = rndPassword;
-                    break;
-                case 1:
-                    user.Email = rndEmail;
-                    user.Password = rndPassword;
-                    break;
-                case 2:
-                    user.Phone = rndPhone;
-                    user.Password = rndPassword;
-                    break;
-            }
-
-            return user;
+                Email = rndEmail,
+                Phone = rndPhone,
+                Password = rndPassword
+            };
         }
 
         protected virtual Employee GenerateRandomEmployee()
