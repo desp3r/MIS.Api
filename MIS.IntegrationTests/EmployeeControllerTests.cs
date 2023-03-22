@@ -174,5 +174,13 @@ namespace MIS.IntegrationTests
             responce.StatusCode.Should().Be(HttpStatusCode.OK);
             var result = await responce.Content.ReadAsAsync<IEnumerable<Employee>>();
         }
+
+        [Fact, TestPriority(999)]
+        public async Task EnsureEmployeesIsEmpty()
+        {
+            await ClearTableAsync<Employee>();
+
+            (await TestRepository.GetAllAsync<Employee>()).Should().BeEmpty();
+        }
     }
 }
